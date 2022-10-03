@@ -1,0 +1,1 @@
+bindgen raylib/src/raylib.h > src/raylib-bindings.rs
