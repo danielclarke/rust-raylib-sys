@@ -44,3 +44,13 @@ fn main() {
     }
 }
 ```
+
+## Binding Process
+* Make a new rust lib `cargo new --lib`
+* Add the c sources in their own directory
+* Create a c header file (`wrapper.h`) that imports all source headers to be bound
+* Run `gen_bindings.sh`
+* `include!` the generated bindings in lib.rs
+* Configure `build.rs` by adding the target os and cpu (this was frustrating on an M1 Mac which was building for x86_64 but trying to link with arm64, `cmake_cfg.define("CMAKE_OSX_ARCHITECTURES", "arm64")` solves this)
+* `println!("cargo:rustc-link-search=native={}/lib", dst.display())` is what finds the built c lib
+* Create a rust binary crate with the above example "open a window" code and run (`cargo run`)
